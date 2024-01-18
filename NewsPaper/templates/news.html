@@ -1,0 +1,42 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load custom_tags %}
+{% load censor %}
+<!-- Название у нас будет News -->
+{% block title %}
+News
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+   <h1>Все новости</h1>
+   <!-- Вот так выглядело использование переменной и фильтра -->
+   <!-- <h3>{{ time_now|date:'M d Y' }}</h3> -->
+   <!-- А вот так мы используем наш тег-->
+   <h3>{% current_time '%b %d %Y' %}</h3>
+   <h3> {{ next_sale|default_if_none:"Чуть позже сообщим о распродаже!" }} </h3>
+
+   <hr>
+    {% if news %}
+       <table>
+           <tr>
+               <td><center>Заголовок</center></td>
+               <td><center>Дата публикации</center></td>
+               <td><center>Текст</center></td>
+           </tr>
+
+           {% for post in news %}
+           <tr>
+               <td><center>{{ post.title|censor }}</center></td>
+               <td><center>{{ post.created_date }}</center></td>
+               <td><center>{{ post.text|truncatechars:20|censor }}</center></td>
+           </tr>
+           {% endfor %}
+
+       </table>
+
+
+    {% else %}
+       <h2>Новостей нет!</h2>
+    {% endif %}
+{% endblock content %}
