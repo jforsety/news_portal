@@ -7,4 +7,6 @@ urlpatterns = [
    # Делаем так, чтобы все адреса из нашего приложения (news/urls.py)
    # подключались к главному приложению с префиксом NewsPaper/.
    path('news/', include('news.urls')),
+   path('', include('news.urls')),
+   path('news/search/', include('news.urls')),
 ]

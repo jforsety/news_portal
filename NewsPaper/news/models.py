@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
+from django.urls import reverse
 
 
 class Author(models.Model):  #Модель, содержащая объекты всех авторов.
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     rating = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.user}'
 
     def update_rating(self):
         postRat = self.post_set.aggregate(postRating=Sum('rating'))
@@ -22,6 +26,9 @@ class Author(models.Model):  #Модель, содержащая объекты 
 
 class Category(models.Model):  #Модель Категорий новостей/статей
     name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name.title()
 
 
 class Post(models.Model):  #Модель постов. Эта модель должна содержать в себе статьи и новости, которые создают пользователи.
@@ -50,6 +57,9 @@ class Post(models.Model):  #Модель постов. Эта модель до�
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[str(self.id)])
 
 
 class PostCategory(models.Model):  #Модель категории постов. Промежуточная модель для связи «многие ко многим»:

@@ -2,7 +2,7 @@ from django import template
 
 register = template.Library()
 
-censor_list = ["Тупой"]
+censor_list = ["Тупой",]
 
 
 @register.filter()
