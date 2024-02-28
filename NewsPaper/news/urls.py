@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 # Импортируем созданные нами представления
 from .views import PostList, PostDetail, Search, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, ArticleEdit, \
    ArticleDelete
@@ -20,5 +20,6 @@ urlpatterns = [
    path('article/create/', ArticleCreate.as_view(), name='article_create'),
    path('article/<int:pk>/edit/', ArticleEdit.as_view(), name='article_edit'),
    path('article/<int:pk>/delete/', ArticleDelete.as_view(), name='article_delete'),
+   path("accounts/", include("allauth.urls")),
 
 ]

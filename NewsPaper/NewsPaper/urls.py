@@ -9,4 +9,5 @@ urlpatterns = [
    path('news/', include('news.urls')),
    path('', include('news.urls')),
    path('news/search/', include('news.urls')),
+   path("accounts/", include("allauth.urls")),
 ]
